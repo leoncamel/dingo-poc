@@ -1,0 +1,55 @@
+version: v1
+managed:
+  enabled: true
+  # C++
+  cc_enable_arenas: true
+
+  # # Go
+  # go_package_prefix:
+  #   default: github.com/leoncamel/goagent/gen/proto/go
+  #   except:
+  #     - buf.build/googleapis/googleapis
+
+plugins:
+  # # Go
+  # - name: go
+  #   out: GoAgent/gen/proto/go
+  #   opt: paths=source_relative
+
+  # - name: go-grpc
+  #   out: GoAgent/gen/proto/go
+  #   opt:
+  #     - paths=source_relative
+  #     - require_unimplemented_servers=false
+
+  # - name: go-zap-marshaler
+  #   out: GoAgent/gen/proto/go
+  #   path: protoc-gen-zap-marshaler
+  #   opt:
+  #     - paths=source_relative
+
+  # - name: go-cobra
+  #   out: GoAgent/gen/proto/go
+  #   opt: paths=source_relative
+  #   path: protoc-gen-cobra
+
+  # C++
+  # - plugin: buf.build/grpc/cpp
+  #   out: src/proto-src/
+
+  # - plugin: buf.build/protocolbuffers/cpp
+  #   out: src/proto-src/
+  - name: cpp
+    out: src/proto/
+
+  # - name: grpc-cpp
+  #   out: src/proto-src/
+
+  # Java
+  - plugin: buf.build/grpc/java
+    out: java/src/main/java
+#    out: gen/proto/java
+
+  - plugin: buf.build/protocolbuffers/java
+    out: java/src/main/java
+

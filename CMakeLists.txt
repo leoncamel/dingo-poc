@@ -35,27 +35,27 @@ include(brpc)
 include(braft)
 include(yaml-cpp)
 
-# LIST ALL THE PROTO FILES AND COMPILE IT TO .H AND .CPP
-file(GLOB PROTO_FILES ${CMAKE_SOURCE_DIR}/proto/*.proto)
-message("protoc: ${PROTOBUF_PROTOC_EXECUTABLE}, proto inc: ${PROTOBUF_INCLUDE_DIRS}, lib: ${PROTOBUF_LIBRARIES}, ${PROTOBUF_PROTOC_LIBRARY}, protos: ${PROTO_FILES}")
-file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/proto)
-foreach (PROTO ${PROTO_FILES})
-    message(proto : ${PROTO})
-    get_filename_component(PROTO_WE ${PROTO} NAME)
-    string(REPLACE ".proto" "" PROTO_WE ${PROTO_WE})
-    list(APPEND PROTO_HDRS "${CMAKE_CURRENT_BINARY_DIR}/proto/${PROTO_WE}.pb.h")
-    list(APPEND PROTO_SRCS "${CMAKE_CURRENT_BINARY_DIR}/proto/${PROTO_WE}.pb.cc")
-    add_custom_command(
-            OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/proto/${PROTO_WE}.pb.h ${CMAKE_CURRENT_BINARY_DIR}/proto/${PROTO_WE}.pb.cc
-            COMMAND ${PROTOBUF_PROTOC_EXECUTABLE}
-            --cpp_out=${CMAKE_CURRENT_BINARY_DIR}/proto
-            --proto_path=${PROTOBUF_INCLUDE_DIR}
-            --proto_path=${CMAKE_SOURCE_DIR}/proto ${PROTO}
-            DEPENDS protobuf
-    )
-endforeach ()
-add_library(PROTO_OBJS OBJECT ${PROTO_SRCS} ${PROTO_HEADER})
-message("Debug Message protoc: ${PROTOBUF_PROTOC_EXECUTABLE}, proto srcs : ${PROTO_SRCS}")
+# # LIST ALL THE PROTO FILES AND COMPILE IT TO .H AND .CPP
+# file(GLOB PROTO_FILES ${CMAKE_SOURCE_DIR}/proto/*.proto)
+# message("protoc: ${PROTOBUF_PROTOC_EXECUTABLE}, proto inc: ${PROTOBUF_INCLUDE_DIRS}, lib: ${PROTOBUF_LIBRARIES}, ${PROTOBUF_PROTOC_LIBRARY}, protos: ${PROTO_FILES}")
+# file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/proto)
+# foreach (PROTO ${PROTO_FILES})
+#     message(proto : ${PROTO})
+#     get_filename_component(PROTO_WE ${PROTO} NAME)
+#     string(REPLACE ".proto" "" PROTO_WE ${PROTO_WE})
+#     list(APPEND PROTO_HDRS "${CMAKE_CURRENT_BINARY_DIR}/proto/${PROTO_WE}.pb.h")
+#     list(APPEND PROTO_SRCS "${CMAKE_CURRENT_BINARY_DIR}/proto/${PROTO_WE}.pb.cc")
+#     add_custom_command(
+#             OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/proto/${PROTO_WE}.pb.h ${CMAKE_CURRENT_BINARY_DIR}/proto/${PROTO_WE}.pb.cc
+#             COMMAND ${PROTOBUF_PROTOC_EXECUTABLE}
+#             --cpp_out=${CMAKE_CURRENT_BINARY_DIR}/proto
+#             --proto_path=${PROTOBUF_INCLUDE_DIR}
+#             --proto_path=${CMAKE_SOURCE_DIR}/proto ${PROTO}
+#             DEPENDS protobuf
+#     )
+# endforeach ()
+# add_library(PROTO_OBJS OBJECT ${PROTO_SRCS} ${PROTO_HEADER})
+# message("Debug Message protoc: ${PROTOBUF_PROTOC_EXECUTABLE}, proto srcs : ${PROTO_SRCS}")
 
 # include PROTO_HEADER
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
